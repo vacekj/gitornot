@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
-
+        GrahamCampbell\GitHub\GitHubServiceProvider::class
     ],
 
     /*
@@ -210,7 +210,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
     ])->toArray(),
 
 ];

@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use Github\AuthMethod;
+use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -25,7 +27,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $user = Auth::user();
+
+    GitHub::authenticate($user->github_token, null, AuthMethod::ACCESS_TOKEN);
+
+    $repos = GitHub::api('repo')->all();
+    return Inertia::render('Dashboard', ['repos' => $repos]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/auth/redirect', function () {
@@ -36,7 +43,7 @@ Route::get('/auth/callback', function () {
     $githubUser = Socialite::driver('github')->user();
 
     Log::debug($githubUser->token);
-    $token  = $githubUser->token;
+    $token = $githubUser->token;
 
     $user = User::updateOrCreate([
         'github_id' => $githubUser->id,
