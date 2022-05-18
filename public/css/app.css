@@ -671,6 +671,24 @@ select {
 .-ml-px {
   margin-left: -1px;
 }
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+.mb-0 {
+  margin-bottom: 0px;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.mr-3 {
+  margin-right: 0.75rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.mt-3 {
+  margin-top: 0.75rem;
+}
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -682,9 +700,6 @@ select {
 }
 .ml-2 {
   margin-left: 0.5rem;
-}
-.mt-4 {
-  margin-top: 1rem;
 }
 .ml-4 {
   margin-left: 1rem;
@@ -701,9 +716,6 @@ select {
 .mb-4 {
   margin-bottom: 1rem;
 }
-.mt-3 {
-  margin-top: 0.75rem;
-}
 .-mr-0\.5 {
   margin-right: -0.125rem;
 }
@@ -715,18 +727,6 @@ select {
 }
 .mt-6 {
   margin-top: 1.5rem;
-}
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-.mb-0 {
-  margin-bottom: 0px;
-}
-.ml-auto {
-  margin-left: auto;
-}
-.mr-3 {
-  margin-right: 0.75rem;
 }
 .block {
   display: block;
@@ -993,9 +993,8 @@ select {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+.pt-0 {
+  padding-top: 0px;
 }
 .pt-8 {
   padding-top: 2rem;
@@ -1024,9 +1023,6 @@ select {
 .pt-6 {
   padding-top: 1.5rem;
 }
-.pt-0 {
-  padding-top: 0px;
-}
 .text-left {
   text-align: left;
 }
@@ -1052,10 +1048,6 @@ select {
   font-size: 1rem;
   line-height: 1.5rem;
 }
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
 .font-medium {
   font-weight: 500;
 }
@@ -1073,9 +1065,6 @@ select {
 }
 .leading-4 {
   line-height: 1rem;
-}
-.leading-tight {
-  line-height: 1.25;
 }
 .tracking-wider {
   letter-spacing: 0.05em;

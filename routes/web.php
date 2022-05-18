@@ -33,7 +33,7 @@ Route::get('/dashboard', function () {
 
     $repos = GitHub::api('repo')->all();
     return Inertia::render('Dashboard', ['repos' => $repos]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('github')->redirect();
