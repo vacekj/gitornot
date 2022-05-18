@@ -3,8 +3,8 @@
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +19,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
@@ -37,13 +35,15 @@ Route::get('/auth/redirect', function () {
 Route::get('/auth/callback', function () {
     $githubUser = Socialite::driver('github')->user();
 
+    Log::debug($githubUser->token);
+    $token  = $githubUser->token;
+
     $user = User::updateOrCreate([
         'github_id' => $githubUser->id,
     ], [
         'name' => $githubUser->name,
         'email' => $githubUser->email,
-        'github_token' => $githubUser->token,
-        'github_refresh_token' => $githubUser->refreshToken,
+        'github_token' => $token,
     ]);
 
     Auth::login($user);

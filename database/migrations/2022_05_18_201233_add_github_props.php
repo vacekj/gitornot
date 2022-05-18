@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('github_token');
-            $table->string('github_refresh_token');
+            $table->string('github_refresh_token')->nullable();
             $table->string('github_id')->unique();
         });
     }
