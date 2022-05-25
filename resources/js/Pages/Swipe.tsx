@@ -18,7 +18,7 @@ type DashboardProps = {
   repos: Repository[];
 };
 
-export default function Dashboard(props: DashboardProps) {
+export default function Swipe(props: DashboardProps) {
   console.log(props.repos);
   return (
     <Authenticated

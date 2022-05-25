@@ -54,4 +54,8 @@ class Repository extends Model
         'description',
         'url'
     ];
+
+    public function swipes() {
+        return Swipe::where('repository_id', $this->id)->get();
+    }
 }

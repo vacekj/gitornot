@@ -39,6 +39,18 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', ['repos' => $repos]);
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/leaderboard', function () {
+    $repos = Repository::all();
+    $best = $repos->map(function (Repository $repo) {
+        return [
+            'repo' => $repo,
+            'score' => $repo->swipes()->map(fn($s) => $s->value)->sum(),
+            'owner' => User::whereId($repo->user_id)->first()
+        ];
+    })->sortBy('score');
+
+    return Inertia::render('Leaderboard', ['repos' => $best]);
+})->middleware(['auth'])->name('leaderboard');
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('github')->redirect();
