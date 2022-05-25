@@ -1,6 +1,6 @@
 import RepoCard from "@/Components/RepoCard";
 import Authenticated from "@/Layouts/Authenticated";
-import { Repository } from "@/Types";
+import { RepositoriesResponse, Repository, Swipe, User } from "@/Types";
 import { Button, Container, Grid, Heading, Link, SimpleGrid, VStack } from "@chakra-ui/react";
 import { Link as InertiaLink } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/inertia-react";
@@ -8,14 +8,10 @@ import { Octokit } from "@octokit/rest";
 import { GetResponseDataTypeFromEndpointMethod } from "@octokit/types";
 import React from "react";
 
-type User = {
-  name: string;
-  email: string;
-};
-
 type DashboardProps = {
   auth: User;
   repos: Repository[];
+  swipes: Swipe[];
 };
 
 export default function Dashboard(props: DashboardProps) {
@@ -35,6 +31,7 @@ export default function Dashboard(props: DashboardProps) {
           return <RepoCard repository={repo} />;
         })}
       </SimpleGrid>
+
     </Authenticated>
   );
 }

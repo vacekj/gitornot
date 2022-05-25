@@ -1,6 +1,6 @@
 import RepoCard from "@/Components/RepoCard";
 import Authenticated from "@/Layouts/Authenticated";
-import { Repository } from "@/Types";
+import { RepositoriesResponse, Repository, User } from "@/Types";
 import {
   Button,
   Container,
@@ -26,14 +26,9 @@ import { Octokit } from "@octokit/rest";
 import { GetResponseDataTypeFromEndpointMethod } from "@octokit/types";
 import React from "react";
 
-type User = {
-  name: string;
-  email: string;
-};
-
 type DashboardProps = {
   auth: User;
-  repos: { repo: Repository; score: number; owner: User }[];
+  repos: RepositoriesResponse;
 };
 
 export default function Leaderboard(props: DashboardProps) {
@@ -43,7 +38,7 @@ export default function Leaderboard(props: DashboardProps) {
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Leaderboard</h2>}
     >
       <Head title="Leaderboard" />
-      <Heading as={"h1"}>Glboal Leaderboards</Heading>
+      <Heading as={"h1"}>Global Leaderboards</Heading>
 
       <TableContainer fontSize={"lg"}>
         <Table variant={"simple"}>

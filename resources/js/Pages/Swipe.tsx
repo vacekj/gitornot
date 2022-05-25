@@ -1,6 +1,6 @@
 import RepoCard from "@/Components/RepoCard";
 import Authenticated from "@/Layouts/Authenticated";
-import { Repository } from "@/Types";
+import { ExtendedRepo, Repository } from "@/Types";
 import { useCounter } from "@chakra-ui/react";
 import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-react";

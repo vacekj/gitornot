@@ -1,4 +1,4 @@
-import { Repository } from "@/Types";
+import { RepositoriesResponse, Repository } from "@/Types";
 import { Box, Button, Heading, HStack, Icon, Image, VStack } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -15,7 +15,7 @@ export default function RepoCard(
   return (
     <VStack spacing={8}>
       <VStack minW={"64"} rounded={"lg"} alignItems={"stretch"} shadow={"xl"} bg={"white"}>
-        {/*<Image roundedTop={"lg"} src={props.repository.} />*/}
+        {/*<Image roundedTop={"lg"} src={props.repository} />*/}
         <VStack p={4} alignItems={"start"}>
           <Heading fontSize={"xl"} fontWeight={"bold"}>{props.repository.name}</Heading>
           <HStack>

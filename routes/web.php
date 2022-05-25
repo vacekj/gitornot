@@ -39,7 +39,22 @@ Route::get('/dashboard', function () {
     $user = Auth::user();
     $repos = Repository::whereUserId($user->id)->get();
 
-    return Inertia::render('Dashboard', ['repos' => $repos]);
+    $repo_leaderboard  = Repository::whereUserId($user->id)->get()->map(function (Repository $repo) {
+        return [
+            'repo' => $repo,
+            'score' => $repo->swipes()->map(fn($s) => $s->value)->sum(),
+            'owner' => User::whereId($repo->user_id)->first()
+        ];
+    })->sortBy('score');
+
+
+    $swipes = $repos->map(fn($repo) => $repo->swipes());
+
+    return Inertia::render('Dashboard', [
+        'repos' => $repos,
+        'leaderboard' => $repo_leaderboard,
+        'swipes' => $swipes
+    ]);
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/leaderboard', function () {
