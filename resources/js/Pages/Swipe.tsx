@@ -1,33 +1,23 @@
 import RepoCard from "@/Components/RepoCard";
 import Authenticated from "@/Layouts/Authenticated";
 import { Repository } from "@/Types";
-import { Button, Container, Grid, Heading, Link, SimpleGrid, useCounter, VStack } from "@chakra-ui/react";
-import { Link as InertiaLink } from "@inertiajs/inertia-react";
+import { useCounter } from "@chakra-ui/react";
+import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-react";
-import { Octokit } from "@octokit/rest";
-import { GetResponseDataTypeFromEndpointMethod } from "@octokit/types";
 import React from "react";
 
 type User = {
   name: string;
   email: string;
+  id: string;
 };
 
 type DashboardProps = {
   auth: User;
-  repos: Repository[];
+  repo: Repository;
 };
 
 export default function Swipe(props: DashboardProps) {
-  const counter = useCounter({
-    min: 0,
-    max: props.repos.length,
-    defaultValue: 0,
-    step: 1,
-  });
-
-
-
   return (
     <Authenticated
       auth={props.auth}
@@ -35,9 +25,21 @@ export default function Swipe(props: DashboardProps) {
     >
       <Head title="Swipe" />
       <RepoCard
-        repository={props.repos[counter.valueAsNumber]}
-        onAccept={() => {}}
-        onReject={() => {}}
+        repository={props.repo}
+        onAccept={() => {
+          Inertia.post("/swipe", {
+            user_id: props.auth.id,
+            repository_id: props.repo.id,
+            value: 1,
+          });
+        }}
+        onReject={() => {
+          Inertia.post("/swipe", {
+            user_id: props.auth.id,
+            repository_id: props.repo.id,
+            value: -1,
+          });
+        }}
       />
     </Authenticated>
   );

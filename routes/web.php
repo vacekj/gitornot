@@ -11,7 +11,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,32 +58,42 @@ Route::get('/leaderboard', function () {
 /* Swiping page */
 Route::get('/swipe', function (Request $req) {
     $user = Auth::user();
-    /* Filter out repositories of the user*/
-    $repos = Repository::where('user_id', '!=', $user->id)
-        ->whereNotExists(function (Builder $query) {
+    /* Filter out repositories owned by user
+    and already rated by user*/
+    $repos = DB::table('repositories')->where('user_id', '!=', $user->id)
+        ->whereNotExists(function (Builder $query) use ($user) {
             $query->select(DB::raw("*"))
                 ->from('swipes')
-                ->where('swipes.repository_id', '==', 'repository.id')
-                ->where('swipes.user_id', '==', 'repository.id');
+                ->whereColumn('swipes.repository_id', '=', 'repositories.id')
+                ->where('swipes.user_id', '=', $user->id);
         })->get();
 
-    return Inertia::render('Swipe', ['repos' => $repos]);
+    return Inertia::render('Swipe', ['repo' => $repos->first()]);
 })->middleware(['auth'])->name('swipe');
 
 /* Perform a swipe */
 Route::post('/swipe', function (Request $req) {
 
+    $user = $req->user();
     $swipe = $req->validate([
-        'user_id' => 'required|integer|exists:users',
-        'repository_id' => 'required|integer|exists:repositories',
+        'repository_id' => 'required|integer|exists:repositories,id',
         'value' => "required|in:-1,1"
     ]);
 
-    if ($req->user()->id !== $swipe->user_id) {
-        abort(403);
+    $dupe = Swipe::where(function ($query) use ($user, $swipe) {
+        $query->select(DB::raw("*"))
+            ->from('swipes')
+            ->where('swipes.repository_id', '=', $swipe['repository_id'])
+            ->where('swipes.user_id', '=', $user->id);
+    })->get();
+
+    if ($dupe->isNotEmpty()) {
+        abort(409);
     }
 
-    return Swipe::firstOrCreate($swipe);
+    Swipe::create([...$swipe, 'user_id' => $req->user()->id]);
+
+    return redirect('/swipe');
 })->middleware(['auth'])->name('swipe');;
 
 
