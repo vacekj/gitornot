@@ -49,7 +49,7 @@ export default function Welcome(props: { repos: Repository[]; auth: any }) {
               </Box>
             </VStack>
             <RepoCard
-              repository={props.repos.sort((a, b) => b.stargazers_count - a.stargazers_count)[0]}
+              repository={props.repos.sort((a, b) => b.stars - a.stars)[0]}
             />
           </HStack>
         </Container>

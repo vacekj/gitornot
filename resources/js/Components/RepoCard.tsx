@@ -15,12 +15,12 @@ export default function RepoCard(
   return (
     <VStack spacing={8}>
       <VStack minW={"64"} rounded={"lg"} alignItems={"stretch"} shadow={"xl"} bg={"white"}>
-        <Image roundedTop={"lg"} src={props.repository.owner.avatar_url} />
+        {/*<Image roundedTop={"lg"} src={props.repository.} />*/}
         <VStack p={4} alignItems={"start"}>
           <Heading fontSize={"xl"} fontWeight={"bold"}>{props.repository.name}</Heading>
           <HStack>
             <Icon as={BiStar} />
-            <Box>{props.repository.stargazers_count} stars</Box>
+            <Box>{props.repository.stars} stars</Box>
           </HStack>
           <HStack>
             <Icon as={BiMap} />

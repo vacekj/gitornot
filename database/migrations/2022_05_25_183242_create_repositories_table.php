@@ -20,9 +20,10 @@ return new class extends Migration
             $table->string('name');
             $table->integer('stars')->default(0);
             $table->integer('forks')->default(0);
-            $table->longText('description')->default('');
+            $table->longText('description')->default('')->nullable();
             $table->json('languages')->nullable();
             $table->foreignIdFor(User::class);
+            $table->string('url');
         });
     }
 

@@ -1,7 +1,7 @@
 import RepoCard from "@/Components/RepoCard";
 import Authenticated from "@/Layouts/Authenticated";
 import { Repository } from "@/Types";
-import { Container, Grid, Heading, Link, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Button, Container, Grid, Heading, Link, SimpleGrid, VStack } from "@chakra-ui/react";
 import { Link as InertiaLink } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/inertia-react";
 import { Octokit } from "@octokit/rest";
@@ -16,10 +16,10 @@ type User = {
 type DashboardProps = {
   auth: User;
   repos: Repository[];
-  enrolledRepositories: Repository[];
 };
 
 export default function Dashboard(props: DashboardProps) {
+  console.log(props.repos);
   return (
     <Authenticated
       auth={props.auth}
@@ -27,6 +27,7 @@ export default function Dashboard(props: DashboardProps) {
     >
       <Head title="Dashboard" />
       <Heading as={"h1"}>Your repositories</Heading>
+      <Button as={InertiaLink} method={"post"} href={"/refresh_repos"}>Refresh Repositories</Button>
       <SimpleGrid minChildWidth={"240px"} spacing={4}>
         {props.repos.map(repo => {
           return <RepoCard repository={repo} />;

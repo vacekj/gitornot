@@ -23,7 +23,8 @@ class RepositoryFactory extends Factory
             'forks' => $this->faker->numberBetween(0, 100),
             'description' => $this->faker->sentence(),
             'languages' => json_encode(["PHP" => 100, "C" => 200]),
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
+            'url' => $this->faker->url()
         ];
     }
 }

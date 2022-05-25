@@ -25,10 +25,23 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Swipe whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Swipe whereValue($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Repository|null $repository
+ * @property-read \App\Models\User|null $user
  */
 class Swipe extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'value',
+        'repository_id'
+    ];
 
     public function user() {
         return $this->belongsTo(User::class);

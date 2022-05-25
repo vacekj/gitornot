@@ -25,8 +25,33 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Repository whereStars($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Repository whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $forks
+ * @property string|null $description
+ * @property string|null $languages
+ * @property int $user_id
+ * @property string $url
+ * @method static \Illuminate\Database\Eloquent\Builder|Repository whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Repository whereForks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Repository whereLanguages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Repository whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Repository whereUserId($value)
  */
 class Repository extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'id',
+        'name',
+        'stars',
+        'user_id',
+        'forks',
+        'description',
+        'url'
+    ];
 }
