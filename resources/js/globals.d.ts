@@ -1,1 +1,1 @@
-declare const route: (route: string) => string;
+declare const route: (route?: string) => string;

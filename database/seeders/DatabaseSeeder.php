@@ -2,8 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Repository;
+use App\Models\Swipe;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +18,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $users = User::factory()->has(Repository::factory()->count(5))->count(30)->create();
+        $repos = Repository::all();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        /** @var User $user */
+        foreach ($users as $user) {
+            /** @var Repository $randomRepo */
+            $randomRepo = $repos->random(1)->first();
+            Swipe::factory()->count(50)->create([
+                'repository_id' => $randomRepo->id,
+                'user_id' => $user->id
+            ]);
+        }
     }
 }

@@ -19,9 +19,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string $github_id
  * @property string $github_token
- * @property string $github_refresh_token
+ * @property string|null $github_refresh_token
+ * @property string $github_id
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
@@ -78,4 +78,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function swipes()
+    {
+        return $this->hasMany(Swipe::class);
+    }
+
+    public function repositories() {
+        return $this->hasMany(Repository::class);
+    }
 }

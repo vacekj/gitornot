@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,18 +21,21 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+
+    $featured_repo = app('github')->repo()->show('foundry-rs', 'foundry');
+
     return Inertia::render('Welcome', [
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'repos' =>[$featured_repo]
     ]);
 });
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
+    app('github')->authenticate($user->github_token, null, AuthMethod::ACCESS_TOKEN);
 
-    GitHub::authenticate($user->github_token, null, AuthMethod::ACCESS_TOKEN);
 
-    $repos = GitHub::api('repo')->all();
+
+    $repos = app('github')->me()->repositories();
     return Inertia::render('Dashboard', ['repos' => $repos]);
 })->middleware(['auth'])->name('dashboard');
 

@@ -129,6 +129,8 @@
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/testing/disks" />
       <excludeFolder url="file://$MODULE_DIR$/storage/logs" />
       <excludeFolder url="file://$MODULE_DIR$/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/public/css" />
+      <excludeFolder url="file://$MODULE_DIR$/public/js" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
