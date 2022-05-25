@@ -6,6 +6,7 @@ use App\Models\Swipe;
 use App\Models\User;
 use Github\AuthMethod;
 use GrahamCampbell\GitHub\Facades\GitHub;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -52,47 +53,22 @@ Route::get('/leaderboard', function () {
     return Inertia::render('Leaderboard', ['repos' => $best]);
 })->middleware(['auth'])->name('leaderboard');
 
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('github')->redirect();
-});
-
-Route::get('/auth/callback', function () {
-    $githubUser = Socialite::driver('github')->user();
-
-    Log::debug($githubUser->token);
-    $token = $githubUser->token;
-
-    $user = User::updateOrCreate([
-        'github_id' => $githubUser->id,
-    ], [
-        'name' => $githubUser->name,
-        'email' => $githubUser->email,
-        'github_token' => $token,
-    ]);
-
-    Auth::login($user);
-
-    return redirect('/dashboard');
-});
-
-/* Swipe on a repository */
-Route::post('/swipe', function (Request $req) {
+/* Swiping page */
+Route::get('/swipe', function (Request $req) {
     $user = Auth::user();
+    /* Filter out repositories of the user*/
+    $repos = Repository::where('user_id', '!=', $user->id)
+        ->whereNotExists(function (Builder $query) {
+            $query->select(DB::raw("*"))
+                ->from('swipes')
+                ->where('swipes.repository_id', '==', 'repository.id')
+                ->where('swipes.user_id', '==', 'repository.id');
+        })->get();
 
-    $swipe = $req->validate([
-        'user_id' => 'required|integer|exists:users',
-        'repository_id' => 'required|integer|exists:repositories',
-        'value' => "required|in:-1,1"
-    ]);
+    return Inertia::render('Swipe', ['repos' => $repos]);
+})->middleware(['auth'])->name('swipe');
 
-    if ($user->id !== $swipe->user_id) {
-        abort(403);
-    }
-
-    return Swipe::firstOrCreate($swipe);
-});
-
-/* Swipe on a repository */
+/* Perform a swipe */
 Route::post('/swipe', function (Request $req) {
 
     $swipe = $req->validate([
@@ -106,7 +82,7 @@ Route::post('/swipe', function (Request $req) {
     }
 
     return Swipe::firstOrCreate($swipe);
-});
+})->middleware(['auth'])->name('swipe');;
 
 
 /* (Re)load user repositories into database */
@@ -131,6 +107,31 @@ Route::post('/refresh_repos', function (Request $req) {
     Repository::upsert($mappedRepos, ['id']);
 
     return redirect('/dashboard');
+})->middleware(['auth']);
+
+/* GitHub Authentication routes */
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('github')->redirect();
 });
+
+Route::get('/auth/callback', function () {
+    $githubUser = Socialite::driver('github')->user();
+
+    Log::debug($githubUser->token);
+    $token = $githubUser->token;
+
+    $user = User::updateOrCreate([
+        'github_id' => $githubUser->id,
+    ], [
+        'name' => $githubUser->name,
+        'email' => $githubUser->email,
+        'github_token' => $token,
+    ]);
+
+    Auth::login($user);
+
+    return redirect('/dashboard');
+});
+
 
 require __DIR__.'/auth.php';

@@ -28,6 +28,9 @@ export default function Authenticated({ auth, header, children }) {
                 <NavLink href={route("leaderboard")} active={route().current("leaderboard")}>
                   Leaderboard
                 </NavLink>
+                <NavLink href={route("swipe")} active={route().current("swipe")}>
+                  Swipe
+                </NavLink>
               </div>
             </div>
 
@@ -100,6 +103,9 @@ export default function Authenticated({ auth, header, children }) {
             </ResponsiveNavLink>
             <ResponsiveNavLink href={route("leaderboard")} active={route().current("leaderboard")}>
               Leaderboards
+            </ResponsiveNavLink>{" "}
+            <ResponsiveNavLink href={route("swipe")} active={route().current("swipe")}>
+              Swipe
             </ResponsiveNavLink>
           </div>
 

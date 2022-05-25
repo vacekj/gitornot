@@ -37,7 +37,6 @@ type DashboardProps = {
 };
 
 export default function Leaderboard(props: DashboardProps) {
-  console.log(Object.values(props.repos));
   return (
     <Authenticated
       auth={props.auth}

@@ -1,7 +1,7 @@
 import RepoCard from "@/Components/RepoCard";
 import Authenticated from "@/Layouts/Authenticated";
 import { Repository } from "@/Types";
-import { Button, Container, Grid, Heading, Link, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Button, Container, Grid, Heading, Link, SimpleGrid, useCounter, VStack } from "@chakra-ui/react";
 import { Link as InertiaLink } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/inertia-react";
 import { Octokit } from "@octokit/rest";
@@ -19,22 +19,26 @@ type DashboardProps = {
 };
 
 export default function Swipe(props: DashboardProps) {
-  console.log(props.repos);
+  const counter = useCounter({
+    min: 0,
+    max: props.repos.length,
+    defaultValue: 0,
+    step: 1,
+  });
+
+
+
   return (
     <Authenticated
       auth={props.auth}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Swipe</h2>}
     >
-      <Head title="Dashboard" />
-      <Heading as={"h1"}>Your repositories</Heading>
-      <Button my={3} colorScheme={"blue"} as={InertiaLink} method={"post"} href={"/refresh_repos"}>
-        {props.repos.length === 0 ? "Load" : "Refresh"} Repositories
-      </Button>
-      <SimpleGrid minChildWidth={"240px"} spacing={4}>
-        {props.repos.map(repo => {
-          return <RepoCard repository={repo} />;
-        })}
-      </SimpleGrid>
+      <Head title="Swipe" />
+      <RepoCard
+        repository={props.repos[counter.valueAsNumber]}
+        onAccept={() => {}}
+        onReject={() => {}}
+      />
     </Authenticated>
   );
 }
