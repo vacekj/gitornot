@@ -43,7 +43,7 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'mysql-local' => [
+        'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -64,7 +64,7 @@ return [
             ]) : [],
         ],
 
-        'mysql' => [
+        'pscale' => [
             'driver' => 'mysql',
             'url' => env('PLANETSCALE_PRISMA_DATABASE_URL'),
             'host' => env('PLANETSCALE_DB_HOST', '127.0.0.1'),
