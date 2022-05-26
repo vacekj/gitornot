@@ -19,6 +19,7 @@
         "APP_NAME": "GitOrNot",
         "APP_ENV": "local",
         "APP_DEBUG": "true",
+        "DB_CONNECTION": "mysql-local",
         "APP_URL": "https://gitornot.vercel.app",
         "VERCEL_DEMO_MODE": "true",
         "APP_CONFIG_CACHE": "/tmp/config.php",
