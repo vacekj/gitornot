@@ -33,6 +33,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'repos' => [$featured_repo]
     ]);
+
 })->name('welcome');
 
 Route::get('/dashboard', function () {
@@ -142,7 +143,7 @@ Route::get('/auth/redirect', function () {
 });
 
 Route::get('/auth/callback', function () {
-    $githubUser = Socialite::driver('github')->stateless()->user();
+    $githubUser = Socialite::driver('github')->user();
 
     $token = $githubUser->token;
 
