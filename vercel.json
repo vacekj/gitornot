@@ -29,6 +29,7 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "array",
+        "SESSION_SECURE_COOKIE": "true",
         "SESSION_DOMAIN": "gitornot.vercel.app",
         "VIEW_COMPILED_PATH": "/tmp/views",
         "SSR_TEMP_PATH": "/tmp/ssr",
