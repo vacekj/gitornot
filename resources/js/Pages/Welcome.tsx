@@ -20,7 +20,7 @@ export default function Welcome(props: { repos: Repository[]; auth: any }) {
   return (
     <>
       <Head title="Welcome to GitOrNot" />
-      <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+      <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0 bg-white">
         <div className="fixed top-0 right-0 px-6 py-4 sm:block">
           {props.auth.user
             ? (
@@ -44,8 +44,7 @@ export default function Welcome(props: { repos: Repository[]; auth: any }) {
                 Ready to put your GitHub to the test?
               </Box>
               <Box fontSize={"lg"}>
-                GitOrNot makes it easy to find like-minded developers, make new friends or even find True Love™. Start
-                by loggin in with your GitHub in the top right
+                Let others rate your github repositories. Compete for the top of the leaderboard. Are your Git or Not?
               </Box>
             </VStack>
             <RepoCard

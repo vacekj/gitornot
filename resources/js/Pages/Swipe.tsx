@@ -21,7 +21,6 @@ export default function Swipe(props: DashboardProps) {
   return (
     <Authenticated
       auth={props.auth}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Swipe</h2>}
     >
       <Head title="Swipe" />
       <RepoCard

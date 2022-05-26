@@ -35,13 +35,12 @@ export default function Leaderboard(props: DashboardProps) {
   return (
     <Authenticated
       auth={props.auth}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Leaderboard</h2>}
     >
       <Head title="Leaderboard" />
       <Heading as={"h1"}>Global Leaderboards</Heading>
 
-      <TableContainer fontSize={"lg"}>
-        <Table variant={"simple"}>
+      <TableContainer fontSize={"lg"} bg={"white"} p={4} rounded={"lg"}>
+        <Table variant={"striped"}>
           <Thead>
             <Tr>
               <Th>Place</Th>

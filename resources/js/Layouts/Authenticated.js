@@ -6,7 +6,7 @@ import { Container } from "@chakra-ui/react";
 import { Link } from "@inertiajs/inertia-react";
 import React, { useState } from "react";
 
-export default function Authenticated({ auth, header, children }) {
+export default function Authenticated({ auth, children }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
   return (
@@ -26,10 +26,10 @@ export default function Authenticated({ auth, header, children }) {
                   Dashboard
                 </NavLink>
                 <NavLink href={route("leaderboard")} active={route().current("leaderboard")}>
-                  Leaderboard
+                  Leaderboards 🥇
                 </NavLink>
                 <NavLink href={route("swipe")} active={route().current("swipe")}>
-                  Swipe
+                  Swipe 🔥
                 </NavLink>
               </div>
             </div>
@@ -102,10 +102,10 @@ export default function Authenticated({ auth, header, children }) {
               Dashboard
             </ResponsiveNavLink>
             <ResponsiveNavLink href={route("leaderboard")} active={route().current("leaderboard")}>
-              Leaderboards
+              Leaderboards 🥇
             </ResponsiveNavLink>{" "}
             <ResponsiveNavLink href={route("swipe")} active={route().current("swipe")}>
-              Swipe
+              Swipe 🔥
             </ResponsiveNavLink>
           </div>
 
