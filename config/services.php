@@ -1,5 +1,7 @@
 <?php
 
+$app_url = env('APP_URL');
+
 return [
 
     /*
@@ -34,6 +36,6 @@ return [
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => '/auth/callback',
+        'redirect' => "{$app_url}/auth/callback",
     ],
 ];
