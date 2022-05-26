@@ -27,8 +27,12 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function () {
-
-    $featured_repo = app('github')->repo()->show('foundry-rs', 'foundry');
+    $featured_repo = [
+        'stars' => 3322,
+        'name' => 'foundry-rs',
+        'created_at' => \Illuminate\Support\Facades\Date::create(2021, 11, 13),
+        'description' => 'Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.'
+    ];
 
     return Inertia::render('Welcome', [
         'repos' => [$featured_repo]
@@ -40,14 +44,13 @@ Route::get('/dashboard', function () {
     $user = Auth::user();
     $repos = Repository::whereUserId($user->id)->get();
 
-    $repo_leaderboard  = Repository::whereUserId($user->id)->get()->map(function (Repository $repo) {
+    $repo_leaderboard = Repository::whereUserId($user->id)->get()->map(function (Repository $repo) {
         return [
             'repo' => $repo,
             'score' => $repo->swipes()->map(fn($s) => $s->value)->sum(),
             'owner' => User::whereId($repo->user_id)->first()
         ];
     })->sortBy('score');
-
 
     $swipes = $repos->map(fn($repo) => $repo->swipes());
 
@@ -146,6 +149,9 @@ Route::get('/auth/callback', function () {
     $githubUser = Socialite::driver('github')->user();
 
     $token = $githubUser->token;
+
+    /* Preemptively authenticate a user */
+    app('github')->authenticate($token, null, AuthMethod::ACCESS_TOKEN);
 
     $user = User::updateOrCreate([
         'github_id' => $githubUser->id,
