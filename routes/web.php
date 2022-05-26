@@ -33,7 +33,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'repos' => [$featured_repo]
     ]);
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
